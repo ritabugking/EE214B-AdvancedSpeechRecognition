@@ -1,0 +1,4 @@
+Important points: 
+
+- 
+- Medium time analysis. This is the biggest thing that they mention that helps with the code deal with noise. They use 50-120 ms windows for medium-time analysis. 
