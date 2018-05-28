@@ -54,21 +54,21 @@ ffto = abs(fft(frmwin, nfft));
 
 ffto = ffto(1 : (nfft/2), :);
 
-%vtln
-ffto2= ffto;
-a=struct();
-for i=1:size(ffto2,2)
-a(i).data=ffto2(:,i);
-end
-aa=vtln(a, 'bilinear', 0.4);
-ffto3=[];
-for i=1:size(ffto2,2)
-    ffto3=[ffto3, aa(i).data];
-end
+%=================vtln===============================================
+% ffto2= ffto;
+% a=struct();
+% for i=1:size(ffto2,2)
+% a(i).data=ffto2(:,i);
+% end
+% aa=vtln(a, 'asymmetric', 0.4);
+% ffto3=[];
+% for i=1:size(ffto2,2)
+%     ffto3=[ffto3, aa(i).data];
+% end
+% 
+% ffto = ffto3;
 
-ffto = ffto3;
-
-
+%====================================================================
 
 
 
@@ -94,12 +94,17 @@ end
 % do liftering with a lifted sin wave
 mfcco = mfcco .* (lifter' * ones(1, framenum));
 
-% cepstral mean subtraction (optional)
+% cepstral mean subtraction 
 mfcco = mfcco - mean(mfcco, 2) * ones(1, size(mfcco, 2));
+% cepstral mean normalization
+std_mfcc = std(mfcco');
+std_mfcc = std_mfcc';
+mfcco = mfcco./std_mfcc;
 
-
-
-
+% normalization for each frame
+m_feature2 = mean(mfcco);
+std_feature2 = std(mfcco);
+mfcco = (mfcco - m_feature2)./std_feature2;
 %=====================================================================
 %================= End of Noise Robust Processing ====================
 %=====================================================================

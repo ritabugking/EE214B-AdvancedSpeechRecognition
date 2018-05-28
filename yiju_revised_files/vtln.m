@@ -7,7 +7,6 @@ if ~(strcmp(warpFunction, 'asymmetric') || strcmp(warpFunction, 'symmetric') || 
     error('Invalid warp function');
 end
 
-
 warpedFreqs = struct();
 
 %frames = struct();
@@ -46,6 +45,7 @@ warpedFreqs = struct();
 
 for j = 1:length(frames)
    m = length(frames(j).data);
+   %m = length(frames(j));
    omega = (1:m) ./ m .* pi;
    omega_warped = omega;
    %plotopts = ''; 
@@ -89,6 +89,7 @@ for j = 1:length(frames)
    %end
     omega_warped = [omega_warped ./ pi .* m];
     warpedFrame = interp1((1:m), frames(j).data, omega_warped, 'linear').';
+    %warpedFrame = interp1((1:m), frames(j), omega_warped, 'linear').';
 
     if isreal(frames(j).data(end))
         warpedFrame(end) = real(warpedFrame(end));
